@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Редактирование цитаты{% endblock title %}
+
+{% block header %}Редактирование цитаты{% endblock header %}
+
+{% block content %}
+<div class="edit-quote-container">
+    <h2>Редактировать цитату</h2>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="quote_text">Текст цитаты:</label><br>
+            <textarea id="quote_text" name="quote_text" rows="4" cols="50" required>{{ quote.quote }}</textarea>
+        </div>
+        <div>
+            <label for="lastname">Автор (фамилия):</label><br>
+            <input type="text" id="lastname" name="lastname" value="{{ quote.lastname }}" required>
+        </div>
+        <div>
+            <label for="bookname">Название книги:</label><br>
+            <input type="text" id="bookname" name="bookname" value="{{ quote.bookname }}" required>
+        </div>
+        <div>
+            <label for="weight">Вес цитаты (число):</label><br>
+            <input type="number" id="weight" name="weight" value="{{ quote.weight }}" required>
+        </div>
+        <br>
+        <button type="submit" class="btn save-btn">Сохранить</button>
+        <a href="{% url 'random_quote' %}" class="btn cancel-btn">Отмена</a>
+    </form>
+</div>
+
+<style>
+.edit-quote-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.edit-quote-container label {
+    font-weight: bold;
+}
+
+.edit-quote-container input[type="text"],
+.edit-quote-container input[type="number"],
+.edit-quote-container textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.save-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.save-btn:hover {
+    background-color: #45a049;
+}
+
+.cancel-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.cancel-btn:hover {
+    background-color: #da190b;
+}
+</style>
+{% endblock content %}

@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Случайная цитата{% endblock title %}
+{% block header %}Случайная цитата{% endblock header %}
+
+{% block content %}
+<div class="quote-container">
+    {% if quote %}
+        <blockquote class="quote-text">
+            "{{ quote.quote }}"
+            <footer class="quote-author">— {{ quote.lastname }}, <cite>{{ quote.bookname }}</cite></footer>
+        </blockquote>
+        
+        <div class="quote-info">
+            <p>Вес цитаты: {{ quote.weight }}</p>
+            <p>Лайки: {{ quote.likes }} | Дизлайки: {{ quote.dislikes }}</p>
+        </div>
+
+        <div class="buttons-row">
+            <form method="post" action="{% url 'like_quote' quote.id %}" class="inline-form">
+                {% csrf_token %}
+                <button type="submit" class="btn like-btn">👍</button>
+            </form>
+
+            <form method="post" action="{% url 'dislike_quote' quote.id %}" class="inline-form">
+                {% csrf_token %}
+                <button type="submit" class="btn dislike-btn">👎</button>
+            </form>
+        </div>
+
+        <div class="quote-action-buttons">
+            <a href="{% url 'random_quote' %}" class="btn action-btn">Другая цитата</a>
+            <a href="{% url 'edit_quote' quote.id %}" class="btn action-btn">Изменить цитату</a>
+        </div>
+        <p>Просмотров: {{ quote.displays }}</p>
+    {% else %}
+        <p class="no-quotes">Цитаты пока отсутствуют.</p>
+    {% endif %}
+</div>
+
+<style>
+.quote-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.quote-text {
+    font-size: 18px;
+    font-style: italic;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-left: 4px solid #ccc;
+    line-height: 1.6;
+}
+
+.quote-author {
+    margin-top: 10px;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.quote-info {
+    margin: 15px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.buttons-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.inline-form {
+    margin: 0;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    min-width: 100px;
+}
+
+.like-btn {
+    background-color: #ffffff;
+    color: white;
+    font-size: 35px;
+}
+
+.like-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.dislike-btn {
+    background-color: #ffffff;
+    color: white;
+    font-size: 35px;
+}
+
+.dislike-btn:hover {
+    background-color: #da190b;
+    transform: translateY(-2px);
+}
+
+
+
+
+
+.no-quotes {
+    color: #999;
+    font-style: italic;
+    font-size: 18px;
+    margin-top: 50px;
+}
+.quote-action-buttons {
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+.action-btn {
+    margin-right: 10px; /* отступ между кнопками */
+    background-color: #2196F3;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.action-btn:hover {
+    background-color: #0b7dda;
+    transform: translateY(-2px);
+}
+
+
+</style>
+{% endblock content %}

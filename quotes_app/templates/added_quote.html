@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block title %}Добавление цитаты{% endblock title %}
+{% block header %}
+    {% if error_message == "Цитата успешно добавлена" %}
+        Цитата успешно добавлена
+    {% else %}
+        Ошибка добавления
+    {% endif %}
+{% endblock header %}
+
+{% block content %}
+{% if error_message == "Такая цитата уже существует" or error_message == "Нельзя добавить больше 3 цитат из одного произведения"%}
+    <div class="alert alert-danger error-message">{{ error_message }}</div>
+    
+    {% if error_message == "Нельзя добавить больше 3 цитат из одного произведения" and existing_quotes %}
+        <div class="existing-quotes">
+            <h3> Существующие цитаты из "{{ bookname }}" ({{ lastname }}):</h3>
+            <div class="quotes-list">
+                {% for quote_obj in existing_quotes %}
+                <div class="quote-item">
+                    <div class="quote-text">"{{ quote_obj.quote }}"</div>
+                    <div class="quote-meta">
+                        <span class="likes"> {{ quote_obj.likes }} лайков</span>
+                        <span class="displays"> {{ quote_obj.displays }} показов</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    
+    <div class="action-buttons">
+        <a href="{% url 'add_quote' %}" class="btn btn-primary"> Добавить другую цитату</a>
+    </div>
+
+{% else %}
+    <div class="success-message">
+        <p>✅ Цитата "<strong>{{ quote }}</strong>" успешно добавлена!</p>
+        <div class="quote-details">
+            <p> Книга: <strong>{{ bookname }}</strong></p>
+            <p> Автор: <strong>{{ lastname }}</strong></p>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <a href="{% url 'add_quote' %}" class="btn btn-primary"> Добавить другую цитату</a>
+    </div>
+{% endif %}
+
+<style>
+.existing-quotes {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #dc3545;
+}
+
+.quotes-list {
+    margin-top: 15px;
+}
+
+.quote-item {
+    padding: 15px;
+    margin: 10px 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.quote-text {
+    font-style: italic;
+    color: #495057;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.quote-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.action-buttons {
+    margin-top: 20px;
+}
+
+.success-message {
+    background: #d4edda;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 4px solid #28a745;
+    margin-bottom: 20px;
+}
+
+.quote-details {
+    margin-top: 15px;
+}
+
+.navigation-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.navigation-links li {
+    margin: 10px 0;
+}
+
+.navigation-links a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 500;
+}
+
+.navigation-links a:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #0056b3;
+    color: white;
+    text-decoration: none;
+}
+.error-message {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+</style>
+{% endblock content %}

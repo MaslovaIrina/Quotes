@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block title %}Добавить цитату{% endblock title %}
+{% block header %}Добавить цитату{% endblock header %}
+
+{% block extra_css %}
+<style>
+  .form-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+  }
+
+  .form-title {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.95rem;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: #4ecdc4;
+    box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+  }
+
+  .form-input::placeholder {
+    color: #adb5bd;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+  }
+
+  .submit-btn:hover {
+    background: linear-gradient(135deg, #44a08d, #3a8c7a);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(78, 205, 196, 0.4);
+  }
+
+  .submit-btn:active {
+    transform: translateY(0);
+  }
+
+  .form-note {
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #4ecdc4;
+  }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="form-container">
+  <h2 class="form-title"> Добавить новую цитату</h2>
+  
+  <form method="post" action="create_result/">
+    {% csrf_token %}
+    
+    <div class="form-group">
+      <label class="form-label">Название книги/фильма</label>
+      <input type="text" name="bookname" class="form-input" placeholder="Введите название книги" required>
+    </div>
+    
+    <div class="form-group">
+      <label class="form-label">Фамилия автора/режиссера</label>
+      <input type="text" name="lastname" class="form-input" placeholder="Введите фамилию автора" required>
+    </div>
+    
+    <div class="form-group">
+      <label class="form-label">Цитата</label>
+      <textarea name="quote" class="form-input" placeholder="Введите текст цитаты" rows="4" required></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label class="form-label">Вес (приоритет показа)</label>
+      <input type="number" name="weight" class="form-input" placeholder="Введите вес (1-10)" min="1" max="10" value="1" required>
+    </div>
+    
+    <button type="submit" class="submit-btn"> Отправить цитату</button>
+  </form>
+  
+  <div class="form-note">
+    💡 Цитаты с большим весом будут показываться чаще в случайной выборке
+  </div>
+</div>
+
+<style>
+
+.submit-btn {
+    background-color: #2196F3;
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    margin-top: 10px;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #0b7dda;
+}
+
+</style>
+{% endblock content %}
+
+
